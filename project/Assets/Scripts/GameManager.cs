@@ -9,11 +9,11 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public GameObject blockPrefab;
-    public GameObject complete;
+    public GameObject complete;// panel that shows after winning
     public Button RestartButton;
-    public float Delay = 0.001f;
+    public float Delay = 0.001f;// delay time to 
     Singleton SingletonObject;
-    public int blockNumber=3;
+    public int blockNumber=3;//set the number of puzzle to 3*3 , here you can set the program to be 15puzzle
 
     void Start()
     {
@@ -21,7 +21,9 @@ public class GameManager : MonoBehaviour
         
         InitializeBlocks();
         ShuffleBlocks();
+
         complete.SetActive(false);
+        
         Button btn = RestartButton.GetComponent<Button>();
         btn.onClick.AddListener(TaskOnClick);
     }
@@ -39,10 +41,10 @@ public class GameManager : MonoBehaviour
         {
             for (int x = 0; x < blockNumber; ++x)
             {
-                if(x!=2 || y!=2)
+                if(x!=blockNumber-1 || y!=blockNumber-1)
                 {
                     var newBlock = Instantiate(blockPrefab, new Vector3(x , 0 , y), Quaternion.identity);
-                    SingletonObject.blocks.Add(newBlock.GetComponent<Drag>());
+                    SingletonObject.blocks.Add(newBlock.GetComponent<Drag>());// this list is for checking the end condition
                 }
             }
         }

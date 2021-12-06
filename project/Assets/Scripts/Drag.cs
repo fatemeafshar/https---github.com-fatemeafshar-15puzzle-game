@@ -6,8 +6,7 @@ using UnityEngine.UI;
 public class Drag : MonoBehaviour
 {
     private Vector3 mOffset;
-    private float mZCoord;
-    public Vector3 v;
+    private float mZCoord;//mouse z coordinate
     public int number;
     public Text numberOnCube;
 
@@ -42,28 +41,20 @@ public class Drag : MonoBehaviour
     }
     void OnMouseDrag()
     {
-        v = GetMouseWorldPros() + mOffset;
-        v.y = 0;
-        //check block does not go out of plane
-        //if (v.x < 0)
-        //    v.x = 0;
-        //else if (v.x > 2)
-        //    v.x = 2;
-
-        //if (v.z < 0)
-        //    v.z = 0;
-        //else if (v.z > 2)
-        //    v.z = 2;
-
-        v.x = (float)Math.Round(v.x);
-        v.z = (float)Math.Round(v.z);
+        Vector3 FinalPos = GetMouseWorldPros() + mOffset;
+        FinalPos.y = 0;
+        FinalPos.x = (float)Math.Round(FinalPos.x);
+        FinalPos.z = (float)Math.Round(FinalPos.z);
         //GameManager gm = FindObjectOfType<GameManager>();
-        if (v == SingletonObject.emptyPos)
+        
+
+        //check to only move to the empty position
+        if (FinalPos == SingletonObject.emptyPos)
         {
             SingletonObject.NumberOfMoves++;
             
             SingletonObject.emptyPos = transform.position;
-            transform.position = v;
+            transform.position = FinalPos;
             SingletonObject.checkWinCondition();
         }
     }
